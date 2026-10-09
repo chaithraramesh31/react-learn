@@ -68,6 +68,15 @@
         width: 45px;
         height: 45px;
       }
+      .welcome-message {
+        color: rgb(120, 120, 120);
+        text-align: center;
+        margin-top: 0;
+      }
+      .loader {
+        height: 40px;
+        margin: -15px;
+      }
     </style>
   </head>
   <body>
@@ -104,7 +113,7 @@
           ]
           setChatMessages([...newChatMessages,
             {
-              message: 'Loading...',
+              message: <img className="loader" src="loading-spinner.gif"/>,
               sender: 'robot'
             }
           ]);
@@ -132,7 +141,7 @@
         }
         return (
           <div className="chat-input-container">
-            <input placeholder="Send a message to chatbot" size="30" onChange={saveInputText} onKeyDown={keyEvents} value={inputText} className="chat-input"/>
+            <input placeholder="Send a message to Chatbot" size="30" onChange={saveInputText} onKeyDown={keyEvents} value={inputText} className="chat-input"/>
             <button onClick={sendMessage} className="send-button">Send</button>
           </div>
         );
@@ -169,6 +178,7 @@
         }, [chatmessages]);
         return (
           <div className="chat-messages-container js-chat-message-container" ref={chatMessagesRef}>
+            {chatmessages.length === 0 && <p className="welcome-message">Welcome to the chatbot project! Send a message using the textbox below.</p>}
             {chatmessages.map((chatMessage, index) => {
               return (
                 <ChatMessage message={chatMessage.message} sender={chatMessage.sender} key={index} />
@@ -179,24 +189,7 @@
       }
 
       function App() {
-        const [chatmessages, setChatMessages] = React.useState([
-          {
-            message: 'hello chatbot',
-            sender: 'user'
-          },
-          {
-            message: 'Hello! How can I help you?',
-            sender: 'robot'
-          },
-          {
-            message: 'todays date',
-            sender: 'user'
-          },
-          {
-            message: 'Today is October 6',
-            sender: 'robot'
-          }
-        ]);
+        const [chatmessages, setChatMessages] = React.useState([]);
 
         // const [chatmessages, setChatMessages] = array;
 
